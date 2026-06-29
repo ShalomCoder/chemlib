@@ -1,0 +1,373 @@
+<!--Created by ASKVD! Just tell me if you want your own copy-->
+<!DOCTYPE html>
+<html lang="en" data-theme="blue" data-card="detailed">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="bootstrap-icons.css" />
+    <title>ChemLib</title>
+    <script src="./script.js"></script>
+    <script src="./gsap/minified/gsap.min.js"></script>
+    <script src="./gsap/minified/TextPlugin.min.js"></script>
+    <script src="./gsap/minified/Draggable.min.js"></script>
+    <script>
+      gsap.registerPlugin(TextPlugin)
+      gsap.registerPlugin(Draggable)
+    </script>
+
+    <style>
+      :root[data-theme="blue"]{
+        --scheme-color: #0286d3;
+        --scheme-color-hover: #00649e;
+        --scheme-color-click: #004770;
+        --scheme-color-tab-hover: #aaaaff;
+      }
+
+      :root[data-theme="red"]{
+        --scheme-color: #ff0000;
+        --scheme-color-hover: #b30000;
+        --scheme-color-click: #740000;
+        --scheme-color-tab-hover: #ffaaaa;
+      }
+
+      :root[data-theme="green"]{
+        --scheme-color: #00ff00;
+        --scheme-color-hover: #00b300;
+        --scheme-color-click: #007400;
+        --scheme-color-tab-hover: #aaffaa;
+      }
+
+      :root[data-theme="pink"]{
+        --scheme-color: #ff7088;
+        --scheme-color-hover: #c95165;
+        --scheme-color-click: #b93f54;
+        --scheme-color-tab-hover: #ffd1d9;
+      }
+
+      :root[data-theme="gold"]{
+        --scheme-color: #ffd700;
+        --scheme-color-hover: #ceaf00;
+        --scheme-color-click: #97872d;
+        --scheme-color-tab-hover: #ffed87;
+      }
+
+      :root[data-card="simple"]{
+        --detailed-display: none;
+        --simple-display: block;
+      }
+
+      :root[data-card="detailed"]{
+        --detailed-display: block;
+        --simple-display: none;
+      }
+    </style>
+  </head>
+
+
+
+  <body class="overflow-auto overflow-x-clip pb-10 w-vw *:select-none bg-fixed" style="background-image: linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, .8)), url('bg.JPG');background-size:400px;background-repeat:repeat" oncontextmenu="alert('You wanna inspect huh😠... Well, I\'ll not allow you😏! And you can\'t show me nothing😎! From: ASKVD');log();return false" onload="firstElem();activeTab($('#homeTab'));getLastTheme();getLastCard();">
+    
+
+    <!--Home Page-->
+  <div id="homePage" class="h-screen w-vw flex items-center">
+    <div class="md:w-5/12 md:fixed w-2/3 mx-auto md:left-0 md:h-screen md:grid md:place-items-center">
+      <div>
+        <div class="text-center p-6">
+          <p class="text-[var(--scheme-color)] text-2xl md:text-4xl"><i class="bi-stars" onclick="shalomagbongo()"></i> ChemLib</p>
+          <!--<p class="text-white text-lg mt-2">Built and Maintained by <i class="bi-person ml-1"></i> ASKVD</p>-->
+        </div>
+  
+        <form onsubmit="return false;">
+        <div class="mx-auto flex overflow-clip bg-white/90 backdrop-blur-md text-black rounded-full p-1 md:w-[360px] md:text-lg w-[300px]">
+            <input type="text" placeholder="Search for an element..." class="p-2 outline-none sent bg-transparent w-10/12" id="searchbar">
+            <button class="bg-[var(--scheme-color)] rounded-full text-white py-2 hover:bg-[var(--scheme-color-hover)] active:bg-[var(--scheme-color-click)] transition-colors duration-300 w-2/12" onclick="searchQuery()"><i class="bi-search"></i></button>
+          </div>
+      </form>
+      </div>
+    </div>
+
+    <!--The actual card-->
+    <div class="md:w-7/12 md:fixed md:right-0 md:h-screen flex items-center justify-center space-x-3 md:space-x-6 z-10">
+      <div>
+        <button class="text-white hover:bg-white/25 p-2 w-12 h-12 rounded-full text-2xl transition-colors duration-300 active:bg-white/50 outline-none" title="Previous Element" onclick="previousElem()"><i class="bi-chevron-left"></i> <p id="prevElem"></p></button>
+      </div>
+      <div class="w-full max-w-[400px] md:max-w-[500px] min-h-32 rounded-[2rem] bg-white/100  backdrop-blur-md mt-6 mx-auto text-center p-6 text-black hover:animate-bouce" id="container" style="user-select: none;">
+        <div class="flex items-center">
+          <p class="text-left text-lg md:text-xl" id="atomic_number1"></p>
+          <p class="ml-auto text-lg md:text-xl" id="name1"></p>
+        </div>
+        <p class="text-6xl md:text-8xl font-light text-[var(--scheme-color)] mb-3" id="symbol"></p>
+        <p class="text-lg mb-5 text-wrap mx-2" id="configuration"></p>
+        <div style="display: var(--detailed-display)">
+        <div class="text-left text-md md:text-lg *:border-b-[1px] *:p-2 *:border-[#888]">
+          <div class="flex items-center">
+            <p>Name</p>
+            <p class="ml-auto" id="name2"></p>
+          </div>
+          <div class="flex items-center">
+            <p>Number</p>
+            <p class="ml-auto" id="atomic_number2"></p>
+          </div>
+          <div class="flex items-center">
+            <p>Mass</p>
+            <p class="ml-auto" id="mass"></p>
+          </div>
+          <div class="flex items-center">
+            <p>State</p>
+            <p class="ml-auto" id="state"></p>
+          </div>
+          <div class="flex items-center">
+            <p>Type</p>
+            <p class="ml-auto" id="type"></p>
+          </div>
+          <div class="flex items-center border-none">
+            <p>Radioactive</p>
+            <p class="ml-auto" id="radioactive"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="-mt-3" style="display: var(--simple-display)">
+        <p id="mass-2" class="text-lg"></p>
+        <p id="state-2" class="text-md"></p>
+      </div>
+
+      </div>
+      <div>
+        <button class="text-white hover:bg-white/25 p-2 w-12 h-12 rounded-full text-2xl transition-colors duration-300 active:bg-white/50 outline-none" title="Previous Element" onclick="nextElem()"><i class="bi-chevron-right"></i> <p id="nextElem"></p></button>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Quiz Page-->
+  <div id="quizPage" class="h-screen">
+    <div class="md:w-5/12 md:fixed w-2/3 mx-auto md:left-0 md:h-screen md:grid md:place-items-center">
+      <div>
+        <div class="text-center p-6">
+          <p class="text-[var(--scheme-color)] text-2xl md:text-4xl"><i class="bi-stars" onclick="shalomagbongo()"></i> ChemLib</p>
+          <!--<p class="text-white text-lg mt-2">Built and Maintained by <i class="bi-person ml-1"></i> ASKVD</p>-->
+          <button class="bg-white text-[var(--scheme-color)] px-6 py-3 rounded-xl mt-2 text-xl"><i class="bi-magic"></i> Random Quiz</button>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="md:w-7/12 md:fixed md:right-0 md:h-screen flex items-center justify-center space-x-3 md:space-x-6 z-10">
+      <div class="w-full max-w-[400px] md:max-w-[500px] min-h-32 rounded-[2rem] bg-white/100  backdrop-blur-md mt-6 mx-auto text-center p-6 text-black hover:animate-bouce" style="user-select: none;">
+        <div id="quiz-controls">
+          <div class="mb-3 space-y-1">
+            <p>Difficulty Level:</p>
+            <select name="difficulty" id="difficulty" class="w-full bg-neutral-200 text-black p-2 text-center rounded-xl outline-none">
+              <option value="10">😁 Student</option>
+              <option value="7">🤓 Tutor</option>
+              <option value="4">🧐 Professor</option>
+              <option value="2">🤖 Robot</option>
+            </select>
+          </div>
+
+          <div class="mb-3 space-y-1">
+          <p>Area:</p>
+            <select name="area" id="area" class="w-full bg-neutral-200 text-black p-2 text-center rounded-xl outline-none">
+              <option value="atomicNumber">Atomic Number</option>
+              <option value="electronConfiguration">Electron Configuration</option>
+              <option value="elementSymbol">Element Symbol</option>
+            </select>
+          </div>
+        </div>
+        <div class="text-center">
+          <button class="w-1/2 bg-[var(--scheme-color)] text-white text-md py-3 px-6 mt-3 rounded-[2rem] hover:bg-[var(--scheme-color-hover)] active:bg-[var(--scheme-color-click)] transition-colors duration-200">Start Quiz</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+  <!--Settings Page-->
+  <div id="settingsPage" class="h-screen">
+    <div class="md:w-5/12 md:fixed w-2/3 mx-auto md:left-0 md:h-screen md:hidden">
+      <div>
+        <div class="text-center p-6">
+          <p class="text-[var(--scheme-color)] text-2xl md:text-4xl"><i class="bi-stars" onclick="shalomagbongo()"></i> ChemLib</p>
+          <p class="text-sm text-white">Version 1.0</p>
+          <!--<p class="text-white text-lg mt-2">Built and Maintained by <i class="bi-person ml-1"></i> ASKVD</p>-->
+        </div>
+      </div>
+    </div>
+    <div class="md:w-full md:h-screen flex items-center md:items-start justify-center space-x-3 md:space-x-6 z-10">
+      <div class="w-full max-w-[500px] md:max-w-none md:w-9/12 rounded-[2rem] bg-white/100  backdrop-blur-md mt-6 mx-auto p-6 text-black hover:animate-bouce md:h-fit md:mt-20" id="container" style="user-select: none;">
+        <div class="hidden md:block">
+          <p class="text-[var(--scheme-color)] text-2xl md:text-4xl"><i class="bi-stars" onclick="shalomagbongo()"></i> ChemLib</p>
+          <p class="text-sm text-black mb-4">Version 1.0</p>
+        </div>
+
+      <p class="text-3xl text-center">Settings</p>
+
+      <div id="color-scheme-settings" class="mt-2">
+        <p class="text-black text-lg">Color Scheme:</p>
+        <div class="w-full min-h-24 rounded-[2rem]">
+          <style>
+            .radio-container{
+              display:flex;
+              gap:10px;
+              padding: 5px 0;
+              flex-wrap: wrap;
+            }
+
+            .radio-label{
+              display:flex;
+              align-items: center;
+              cursor: pointer;
+              border: 2px solid #ddd;
+              border-radius: 50rem;
+              transition: background-color 0.3s ease;
+              overflow: clip;
+            }
+
+            .radio-label:hover{
+              background-color: #f0f0f0;
+            }
+
+            .radio-input{
+              display:none;
+            }
+
+            .radio-text{
+              flex-grow: 1;
+              padding:5px 20px;
+              transition: background-color 0.3s ease;;
+            }
+
+            .radio-input:checked ~ .radio-text{
+              font-weight: 800;
+              color: #ffffff;
+              background-color: var(--scheme-color);
+            }
+          </style>
+          
+
+          <!--The Radio Buttons-->
+
+          <div class="radio-container">
+            <label class="radio-label">
+              <input type="radio" name="theme" class="radio-input" value="green" onclick="colorScheme(this)">
+              <span class="radio-text">Green</span>
+            </label>
+          
+
+            <label class="radio-label">
+              <input type="radio" name="theme" class="radio-input" value="blue" onclick="colorScheme(this)">
+              <span class="radio-text">Blue</span>
+            </label>
+
+            <label class="radio-label">
+              <input type="radio" name="theme" class="radio-input" value="red" onclick="colorScheme(this)">
+              <span class="radio-text">Red</span>
+            </label>
+
+            <label class="radio-label">
+              <input type="radio" name="theme" class="radio-input" value="pink" onclick="colorScheme(this)">
+              <span class="radio-text">Pink</span>
+            </label>
+
+            <label class="radio-label">
+              <input type="radio" name="theme" class="radio-input" value="gold" onclick="colorScheme(this)">
+              <span class="radio-text">Gold</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!--
+        Feature removed because it's useless!
+
+      Background color settings
+      <div id="bg-picture-settings" class="-mt-4">
+        <div class="flex items-center space-x-3">
+          <p>Background Picture:</p>
+          <select name="toggleBgPic" id="toggleBgPic" class="w-20 bg-neutral-100 rounded-lg p-2">
+            <option value="on">On</option>
+            <option value="off">Off</option>
+          </select>
+        </div>
+      
+      </div>-->
+
+      <!--Card View Toggler-->
+      <p class="text-lg -mt-10">Card View:</p>
+      <div class="radio-container">
+        <style>
+          .radio-container-v{
+            display:flex;
+            gap:10px;
+            padding: 5px 0;
+            flex-wrap: wrap;
+          }
+
+          .radio-input-v{
+            display:none;
+          }
+
+          .radio-input-v:checked ~ .radio-text{
+            font-weight: 800;
+            color: #ffffff;
+            background-color: var(--scheme-color);
+          }
+        </style>
+        <label class="radio-label">
+          <input type="radio" name="card-view" class="radio-input-v" value="simple" onclick="cardView(this)">
+          <span class="radio-text">Simple</span>
+        </label>
+      
+
+        <label class="radio-label">
+          <input type="radio" name="card-view" class="radio-input-v" value="detailed" onclick="cardView(this)">
+          <span class="radio-text">Detailed</span>
+        </label>
+    </div>
+  </div>
+    
+      </div>
+  </div>
+  </div>
+
+    <!--Navbar-->
+      <div class="w-fit mx-auto h-fit bg-white rounded-lg space-y-1 *:rounded-lg overflow-clip fixed left-3 top-3 p-[3px] flex-col flex shadow-[0px_0px_10px_#1112]" id="navbar">
+        <div class="w-8/12 h-1 bg-gray-300 mx-auto my-[3px] mt-[5px] rounded-full" id="navbar-drag"></div>
+        <button class="active-tab tab" onclick="activeTab(this)" id="homeTab"><i class="bi-house"></i></button>
+        <button class="inactive-tab tab" onclick="activeTab(this)" id="quizTab"><i class="bi-patch-question"></i></button>
+        <button class="inactive-tab tab" onclick="activeTab(this)" id="settingsTab"><i class="bi-gear"></i></button>
+        <style>
+          .active-tab{
+            background-color: var(--scheme-color);
+            color: white;
+            font-size:1.5rem;
+            line-height: 2rem;
+            padding: 0.5rem 0.75rem;
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 200ms;
+            outline:none;
+          }
+
+          .inactive-tab{
+            font-size: 1.5rem;
+            line-height: 2rem;
+            padding: 0.5rem 0.75rem;
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 200ms;
+            outline:none;
+            &:hover{
+              background-color: var(--scheme-color-tab-hover);
+            }
+          }
+        </style>
+      </div>
+  </body>
+</html>
